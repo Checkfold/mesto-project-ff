@@ -9,7 +9,7 @@ const profileEditButton = document.querySelector(".profile__edit-button");
 const addButton = document.querySelector(".profile__add-button");
 
 const profilePopup = document.querySelector(".popup_type_edit");
-const profileForm = profilePopup.querySelector(".popup__form");
+const profileForm = profilePopup.querySelector(".popup__form");  // редактирования
 const nameInput = profileForm.querySelector('input[name="name"]');
 const descriptionInput = profileForm.querySelector('input[name="description"]');
 
@@ -17,7 +17,7 @@ const profileTitle = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__description");
 
 const newCardPopup = document.querySelector('.popup_type_new-card');
-const newCardForm = newCardPopup.querySelector('.popup__form');
+const newCardForm = newCardPopup.querySelector('.popup__form');  // добавления
 const placeNameInput = newCardForm.querySelector('input[name="place-name"]');
 const linkInput = newCardForm.querySelector('input[name="link"]');
 
@@ -76,10 +76,10 @@ profileForm.addEventListener("submit", (evt) => {
 newCardForm.addEventListener("submit", (evt) => {
   evt.preventDefault();
 
-   const name= placeNameInput.value;
-   const link= linkInput.value;
+   const name = placeNameInput.value;
+   const link = linkInput.value;
 
-   const newCard= createCard({ name, link }, handleDeleteCard, handleLikeButtonClick);
+   const newCard = createCard({ name, link }, handleDeleteCard, handleLikeButtonClick);
 
    placesList.prepend(newCard);
 
