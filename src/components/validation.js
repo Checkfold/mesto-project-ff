@@ -17,16 +17,6 @@ function hideInputError(formElement, inputElement, settings) {
 }
 
 function checkInputValidity(formElement, inputElement, settings) {
-  if (inputElement.validity.tooShort) {
-    showInputError(
-      formElement,
-      inputElement,
-      inputElement.validationMessage,
-      settings
-    );
-    return false;
-  }
-
   if (!inputElement.validity.valid) {
     if (inputElement.validity.patternMismatch) {
       showInputError(
@@ -98,6 +88,7 @@ function clearValidation(formEl, settings) {
 
   inputs.forEach((input) => {
     hideInputError(formEl, input, settings);
+    input.setCustomValidity("");
   });
 
   disableSubmitButton(submitButton, settings);
