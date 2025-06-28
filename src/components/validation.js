@@ -17,15 +17,6 @@ function hideInputError(formElement, inputElement, settings) {
 }
 
 function checkInputValidity(formElement, inputElement, settings) {
-  if (inputElement.validity.valueMissing) {
-    showInputError(
-      formElement,
-      inputElement,
-      inputElement.validationMessage,
-      settings
-    );
-    return false;
-  }
   if (inputElement.validity.tooShort) {
     showInputError(
       formElement,
@@ -37,7 +28,7 @@ function checkInputValidity(formElement, inputElement, settings) {
   }
 
   if (!inputElement.validity.valid) {
-    if (inputElement.dataset.errorMessage) {
+    if (inputElement.validity.patternMismatch) {
       showInputError(
         formElement,
         inputElement,
@@ -59,16 +50,22 @@ function checkInputValidity(formElement, inputElement, settings) {
   }
 }
 
+function disableSubmitButton(button, settings) {
+  button.classList.add(settings.inactiveButtonClass);
+  button.disabled = true;
+}
+
+function enableSubmitButton(button, settings) {
+  button.classList.remove(settings.inactiveButtonClass);
+  button.disabled = false;
+}
+
 function toggleButtonState(inputs, button, settings) {
-  const isValid = inputs.every((input) =>
-    checkInputValidity(input.closest("form"), input, settings)
-  );
+  const isValid = inputs.every((input) => input.validity.valid);
   if (isValid) {
-    button.classList.remove(settings.inactiveButtonClass);
-    button.disabled = false;
+    enableSubmitButton(button, settings);
   } else {
-    button.classList.add(settings.inactiveButtonClass);
-    button.disabled = true;
+    disableSubmitButton(button, settings);
   }
 }
 
@@ -103,8 +100,7 @@ function clearValidation(formEl, settings) {
     hideInputError(formEl, input, settings);
   });
 
-  submitButton.classList.add(settings.inactiveButtonClass);
-  submitButton.disabled = true;
+  disableSubmitButton(submitButton, settings);
 }
 
 export { enableValidation, clearValidation };
